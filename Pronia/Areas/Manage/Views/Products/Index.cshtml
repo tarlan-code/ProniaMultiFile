@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewData["Title"] = "Products";
+}
+@model IEnumerable<Product>
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Product Colors</h1>
+
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+
+            <a class="btn btn-success" asp-area="Manage" asp-controller="Products" asp-action="Create">Add</a>
+
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>SKU</th>
+                            <th>Cost Price</th>
+                            <th>Sell Price</th>
+                            <th>Discount</th>
+                            <th>Status</th>
+                            <th>Sizes</th>
+                            <th>Colors</th>
+                            <th>Categories</th>
+                            <th>Cover Image</th>
+                            <th>Date</th>
+                            <th></th>
+                            <th></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        @foreach (Product item in Model)
+                        {
+                            <tr class="text-dark @(item.IsDeleted ? "bg-danger" : "")">
+                                <td>@item.Id</td>
+                                <td>@item.Name</td>
+                                <td>@(item.Desc.Length > 50 ? item.Desc.Substring(0,49) : item.Desc)</td>
+                                <td>@item.SKU</td>
+                                <td>@item.CostPrice</td>
+                                <td>@item.SellPrice</td>
+                                <td>@item.Discount</td>
+                                <td>@(item.IsDeleted ? "Deactive" : "Active")</td>
+                                <td>
+                                    @foreach (var size in item?.ProductSizes.Where(ps => ps.ProductId == item.Id))
+                                    {
+                                        <span>@size.Size.Name</span>
+                                    }
+                                </td>
+                                <td>
+                                    
+                                    @foreach (var color in item?.ProductColors.Where(pc => pc.ProductId == item.Id))
+                                    {
+                                        <span>@color.Color.Name</span>
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var category in item?.ProductCategories.Where(pc => pc.ProductId == item.Id))
+                                    {
+                                        <span>@category.Category.Name</span>
+                                    }
+                                </td>
+                                <td><img src="~/assets/images/product/@(item?.ProductImages.Where(pi => pi.IsCover == true).First().Image)"/></td>
+
+                                
+
+                                <td><a class="btn btn-warning" asp-area="Manage" asp-controller="Products" asp-action="Update" asp-route-id="@item.Id">Update</a></td>
+
+                                <td><a class="btn btn-danger" asp-area="Manage" asp-controller="Products" asp-action="Delete" asp-route-id="@item.Id">Delete</a></td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+
+
