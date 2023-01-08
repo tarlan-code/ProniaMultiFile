@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pronia.DAL;
+using Pronia.ViewModels;
 
 namespace Pronia.Controllers
 {
@@ -14,9 +15,12 @@ namespace Pronia.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.Categories = _context.Categories.ToList();
-            ViewBag.Colors = _context.Colors.ToList();
-            return View();
+            ShopVM shopVM = new ShopVM()
+            {
+                Categories = _context.Categories,
+                Colors = _context.Colors,
+            };
+            return View(shopVM);
         }
     }
 }

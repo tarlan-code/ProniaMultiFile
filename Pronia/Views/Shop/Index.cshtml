@@ -3,7 +3,7 @@
     ViewData["Title"] = "Index";
 }
 
-
+@model ShopVM
   <!-- Begin Main Content Area -->
       <main class="main-content">
         <div
@@ -53,7 +53,7 @@
                             All <span>(65)</span>
                           </a>
                         </li>
-                        @foreach (Category item in ViewBag.Categories)
+                        @foreach (Category item in Model.Categories)
                         {
                             @if (item.IsActive)
                             {
@@ -79,7 +79,7 @@
                           </a>
                         </li>
 
-                        @foreach (Color item in ViewBag.Colors)
+                        @foreach (Color item in Model.Colors)
                         {
                             if (item.IsActive)
                             {
